@@ -4,51 +4,49 @@ using namespace std;
 const int maxn = 2000001, maxt = 100002, mod = 1000000007;
 int dp[maxt], ans[maxn];
 int a, b, c, d, e, i, j, k, l = INT_MAX, m = -1, n, o, p, q, r, s, t = 1, u, v,
-                            w, x, y, z, tot = 0;
+w, x, y, z, tot = 0;
 bool flag;
 string str;
 int gcd(int a, int b) { return b == 0 ? a : gcd(b, a % b); }
-int32_t main() {
-  cin >> t;
-  while (t--) {
-    cin >> n;
-    vector<int> v(n), inv(n), invu(n);
-    tot = 0;
-    for (int i = 0; i < n; i++) {
-      cin >> v[i];
-    }
-    int inv_count = 0, cover = 0;
-    for (int i = 0; i < n - 1; i++) {
-      for (int j = i + 1; j < n; j++) {
-        if (v[i] > v[j]) {
-          inv_count++;
-          if (v[i] - v[j] == 1) {
-            cover++;
-          }
-        }
-      }
-      // inv[i] = inv_count;
-      // invu[i] = inv_count - cover;
-    }
-    // for (int i = 0; i < n; i++) {
-    //   cout << inv[i] << " ";
-    // }
-    // cout << endl;
-    // for (int i = 0; i < n; i++) {
-    //   cout << invu[i] << " ";
-    // }
-    // cout << endl;
-    // cout << endl;
-    cout << cover << endl;
-  }
-  return 0;
+
+int getOnes(string str, int id) {
+	int maxm = 0, cur = 0;
+	for (int i = id; i < str.size(); i++) {
+		if (str[i] == '1') {
+			cur++;
+		}
+		else {
+			maxm = max(cur, maxm);
+			cur = 0;
+		}
+	}
+	return maxm;
 }
 
-// int32_t main() {
-//   cin >> t;
-//   while (t--) {
-//     cin >> a >> b;
-//     cout << a - gcd(a, b) << endl;
-//   }
-//   return 0;
-// }
+int32_t main() {
+	cin >> t;
+	while (t--) {
+		cin >> n;
+		cin >> str;
+		flag = false;
+		bool flag2 = false, flag3 = false;
+		tot = 0;
+		a = 0, b = 0, c = 0;
+		i = 0;
+		if (str[0] == '1') {
+			while (str[i] == '1')
+			{
+				a++;
+				i++;
+				c = getOnes(str, i);
+			}
+			cout << a + c << endl;
+		}
+		else {
+			c = getOnes(str, 0);
+			cout << c << endl;
+		}
+	}
+
+	return 0;
+}
