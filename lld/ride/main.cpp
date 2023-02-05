@@ -39,15 +39,16 @@ class Rider: private Person { // inherits all the//?public property of class
      // closeRide(){};
      // currentRide Ride;
 private:
-     vector<Ride> completedRides;
-     Ride currentRide;
+     vector<Ride> allRides;
+     // Ride currentRide;
 
 public:
      Rider(string);
      void createRide(int, int, int, int);
      void updateRide(int, int, int, int);
      void withdrawRide(int);
-     int closeRide();
+     int closeRide(int);
+     Ride* findRide(int);
 };
 
 class Driver: private Person {
@@ -65,55 +66,83 @@ Driver::Driver(string name) {
 Rider::Rider(string name) {
      this->name = name;
 }
-void Rider::createRide(int id, int origin, int dest, int seats) {
-     if (currentRide.getRideStatus()==RideStatus::CREATED) {
-          cout<<"Can't allow multiple ride at a time\n";
-          return;
+Ride* Rider::findRide(int id) {
+     auto itr = allRides.rbegin();
+     for (;itr!=allRides.rend();itr++) {
+          if (itr->getId()==id) {
+               return &*itr; //!couldnt return just  itr as it's an iterator not a pointer
+          }
      }
+     return nullptr;
+}
+void Rider::createRide(int id, int origin, int dest, int seats) {
+     // if (currentRide.getRideStatus()==RideStatus::CREATED) {
+     //      cout<<"Can't allow multiple ride at a time\n";
+     //      return;
+     // }
      if (origin >= dest) {
           cout << "Wrong values of origin and destination: " << origin << " "
                << dest << endl;
           return;
      }
+     Ride currentRide;
      currentRide.setId(id);
      currentRide.setOrigin(origin);
      currentRide.setDest(dest);
      currentRide.setSeats(seats);
      currentRide.setRideStatus(RideStatus::CREATED);
+     allRides.push_back(currentRide);
      cout<<"Ride created/updated successfully\n";
 }
 void Rider::updateRide(int id, int origin, int dest, int seats) {
-     if (currentRide.getRideStatus() == RideStatus::COMPLETED) {
+     Ride* currentRide = findRide(id);
+     if (currentRide==nullptr) {
+          cout<<"Can't find the ride with given id\n";
+          return;
+     }
+     if (currentRide->getRideStatus() == RideStatus::COMPLETED) {
           cout << "Can't update completed ride\n";
           return;
      }
-     if (currentRide.getRideStatus() == RideStatus::WITHDRAWN) {
+     if (currentRide->getRideStatus() == RideStatus::WITHDRAWN) {
           cout << "Can't update withdrawn ride\n";
           return;
      }
      cout<<"Updating ride...\n";
-     createRide(id, origin, dest, seats);
+     currentRide->setOrigin(origin);
+     currentRide->setDest(dest);
+     currentRide->setSeats(seats);
 }
 void Rider::withdrawRide(int id) {
-     if (currentRide.getId() != id) {
+     Ride* currentRide = findRide(id);
+     if (currentRide==nullptr) {
+          cout<<"Can't find the ride with given id\n";
+          return;
+     }
+     if (currentRide->getId() != id) {
           cout << "Wrong id in input\n";
           return;
      }
-     if (currentRide.getRideStatus() != RideStatus::CREATED) {
+     if (currentRide->getRideStatus() != RideStatus::CREATED) {
           cout << "Ride is not in progress\n";
           return;
      }
-     currentRide.setRideStatus(RideStatus::WITHDRAWN);
+     currentRide->setRideStatus(RideStatus::WITHDRAWN);
      cout<<"Ride withdrawn\n";
 }
-int Rider::closeRide() {
-     if (currentRide.getRideStatus() != RideStatus::CREATED) {
+int Rider::closeRide(int id) {
+     Ride* currentRide = findRide(id);
+     if (currentRide==nullptr) {
+          cout<<"Can't find the ride with given id to close\n";
+          return 0;
+     }
+     if (currentRide->getRideStatus() != RideStatus::CREATED) {
           cout << "Ride is not in progress. Can't close the ride\n";
           return 0;
      }
-     currentRide.setRideStatus(RideStatus::COMPLETED);
-     completedRides.push_back(currentRide);
-     return currentRide.calculateFare(completedRides.size()>=2);
+     currentRide->setRideStatus(RideStatus::COMPLETED);
+     // allRides.push_back(*currentRide);
+     return currentRide->calculateFare(allRides.size()>=2);
 }
 int Ride::calculateFare(bool isPriority = false) {
      int dist = dest - origin;
@@ -132,12 +161,13 @@ int main() {
 
      rider.createRide(1, 50, 60, 1);
      rider.createRide(1, 60, 70, 2);
-     cout<<rider.closeRide()<<endl;
+     cout<<rider.closeRide(1)<<endl;
      rider.updateRide(1, 60, 70, 2);
-     cout<<rider.closeRide()<<endl;
+     cout<<rider.closeRide(1)<<endl;
      rider.createRide(1, 60, 70, 2);
      rider.updateRide(1, 70, 80, 2); //? this creates a bug where user can create a ride and keep updating it and pays only for the last ride
-     cout<<rider.closeRide()<<endl;
+     rider.updateRide(4, 70, 80, 2);
+     cout<<rider.closeRide(1)<<endl;
 
      cout<<"*********************************************\n";
 
@@ -145,7 +175,7 @@ int main() {
      rider.createRide(1, 50, 60, 1);
      rider.withdrawRide(1);
      rider.updateRide(1, 50, 60, 2);
-     cout<<rider.closeRide()<<endl;
+     cout<<rider.closeRide(1)<<endl;
 
      return 0;
 }
