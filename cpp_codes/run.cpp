@@ -27,24 +27,32 @@ int32_t main() {
 	cin >> t;
 	while (t--) {
 		cin >> n;
-		cin >> str;
-		flag = false;
-		bool flag2 = false, flag3 = false;
-		tot = 0;
-		a = 0, b = 0, c = 0;
-		i = 0;
-		if (str[0] == '1') {
-			while (str[i] == '1')
-			{
-				a++;
-				i++;
-				c = getOnes(str, i);
-			}
-			cout << a + c << endl;
+		vector<int> v(n);
+		if (n==2) {
+			cout<<"343 -343\n";
 		}
 		else {
-			c = getOnes(str, 0);
-			cout << c << endl;
+			v[0] = 1;
+			v[n-1] = -1;
+			int ls = 1, rs = -1;
+			for (int i = 1;i<(n/2);i++) {
+				if (i%2) {
+					v[i] = -1;
+					v[n-i-1] = ls-rs;
+					ls++;
+					rs += v[n-i-1];
+				}
+				else {
+					v[i] = 1;
+					v[n-i-1] = ls-rs;
+					ls++;
+					rs += v[n-i-1];
+				}
+			}
+			for (int i = 0;i<n;i++) {
+				cout<<v[i]<<" ";
+			}
+			cout<<endl;
 		}
 	}
 
