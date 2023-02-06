@@ -24,37 +24,19 @@ int getOnes(string str, int id) {
 }
 
 int32_t main() {
-	cin >> t;
+	// cin >> t;
 	while (t--) {
-		cin >> n;
+		cin >> n; tot = 0;
 		vector<int> v(n);
-		if (n==2) {
-			cout<<"343 -343\n";
-		}
-		else {
-			v[0] = 1;
-			v[n-1] = -1;
-			int ls = 1, rs = -1;
-			for (int i = 1;i<(n/2);i++) {
-				if (i%2) {
-					v[i] = -1;
-					v[n-i-1] = ls-rs;
-					ls++;
-					rs += v[n-i-1];
-				}
-				else {
-					v[i] = 1;
-					v[n-i-1] = ls-rs;
-					ls++;
-					rs += v[n-i-1];
-				}
+		for (int i = 0;i<n;i++) {
+			cin>>v[i];
+			q = sqrt(v[i]);
+			if (q*q==v[i]) {
+				tot += q;
 			}
-			for (int i = 0;i<n;i++) {
-				cout<<v[i]<<" ";
-			}
-			cout<<endl;
 		}
 	}
+	cout<<tot<<endl;
 
 	return 0;
 }
