@@ -15,7 +15,7 @@ bool flag, flag2;
 string str, str2;
 bool isValid(int i, int j, vector<string>& v) { return i > -1 && i < n&& j > -1 && j < m&& v[i][j]=='.'; }
 int32_t main() {
-    cin>>t;
+    // cin>>t;
     while (t--) {
         cin >> n;
     }

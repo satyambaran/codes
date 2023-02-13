@@ -80,7 +80,7 @@ Node* removeDuplicates(Node* root) {
     while (root&&root->next) {
         if (root->val==root->next->val) {
             Node* temp = root->next;
-            root->next = temp->next;
+            root->next = root->next->next;
             free(temp);
         }
         root = root->next;

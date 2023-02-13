@@ -1,42 +1,70 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define int long long
-const int maxn = 2000001, maxt = 100002, mod = 1000000007;
-int dp[maxt], ans[maxn];
-int a, b, c, d, e, i, j, k, l = INT_MAX, m = -1, n, o, p, q, r, s, t = 1, u, v,
-w, x, y, z, tot = 0;
-bool flag;
-string str;
-int gcd(int a, int b) { return b == 0 ? a : gcd(b, a % b); }
+class Solution {
+public:
+	int maxProfit(int k, vector<int>& prices) {
+		int n = prices.size();
 
-int getOnes(string str, int id) {
-	int maxm = 0, cur = 0;
-	for (int i = id; i < str.size(); i++) {
-		if (str[i] == '1') {
-			cur++;
+		// Case 1 :
+		if (k == 0 || prices.size() < 2) {
+			return 0;
 		}
-		else {
-			maxm = max(cur, maxm);
-			cur = 0;
-		}
-	}
-	return maxm;
-}
 
-int32_t main() {
-	// cin >> t;
-	while (t--) {
-		cin >> n; tot = 0;
-		vector<int> v(n);
-		for (int i = 0;i<n;i++) {
-			cin>>v[i];
-			q = sqrt(v[i]);
-			if (q*q==v[i]) {
-				tot += q;
+		// Case 2 :
+		int maxProfit = 0;
+		if (n < k * 2) {
+			for (int i = 1; i < prices.size(); i++) {
+				if (prices[i - 1] < prices[i]) {
+					maxProfit += prices[i] - prices[i - 1];
+				}
+			}
+			return maxProfit;
+		}
+
+		vector<int> dp((2 * k));
+		dp[0] = -prices[0];
+
+		for (int i = 1; i < 2 * k; i++) {
+			if (i % 2 == 0) {
+				dp[i] = INT_MIN;
+			}
+			else {
+				dp[i] = 0;
 			}
 		}
-	}
-	cout<<tot<<endl;
 
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < 2 * k; j++) {
+				if (j == 0) {
+					dp[j] = max(dp[j], -prices[i]);
+				}
+				else if (j % 2 == 0) {
+					dp[j] = max(dp[j], dp[j - 1] - prices[i]);
+				}
+				else {
+					dp[j] = max(dp[j], dp[j - 1] + prices[i]);
+				}
+			}
+		}
+		return dp[2 * k - 1];
+	}
+};
+int main() {
+	string name = "satyam";
+	string name2 = "satyaprakash";
+	string s = "flam";
+	int k = 5;
+	while (s.size() > 1) {
+
+		string news;
+		int to_remove = s.size() % k;
+		if (s.size() == 1) {
+			cout << s << endl;
+			break;
+		}
+	}
+	int i = 0, n = name.size(), m = name2.size();
+	while (i < n && i < m && name[i] == name2[i]) {
+	}
 	return 0;
 }
