@@ -107,7 +107,6 @@ func main() {
 
 // How Threads and Processes Work Step By Step
 
-
 // The program starts out as a text file of programming code.
 // The program is compiled or interpreted into binary form.
 // The program is loaded into memory.
@@ -115,3 +114,5 @@ func main() {
 // Threads exist as the subset of a process.
 // Threads can communicate with each other more easily than processes can.
 // Threads are more vulnerable to problems caused by other threads in the same process.
+
+// https://stackoverflow.com/questions/53791646/multiple-sync-waitgroup-usage
