@@ -146,3 +146,10 @@ console.log(x == y); //  false
 
 
 console.log(Math.random())
+
+let xss =
+	(![] + [])[+[]] +
+	(![] + [])[+!+[]] +
+	([![]] + [][[]])[+!+[] + [+[]]] +
+	(![] + [])[!+[] + !+[]];
+console.log(xss)
