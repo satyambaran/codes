@@ -2,7 +2,7 @@
 using namespace std;
 
 class Meeting;
-typedef vector<Meeting> Calendar;
+typedef unordered_map<int, vector<Meeting>> Calendar;
 class Room {
 public:
     Room(string);
@@ -19,18 +19,16 @@ private:
 
 class Meeting {
 public:
-    Meeting(int, int, int, Room);
+    Meeting(int, int, Room);
     int getEnd() const;
     void setEnd(int end);
     const Room& getRoom() const;
     void setRoom(const Room& room);
     int getStart() const;
     void setStart(int start);
-    int getDay() const;
-    void setDay(int day);
 
 private:
-    int start, end, day;
+    int start, end;
     Room room;
 };
 
@@ -40,7 +38,6 @@ public:
     Scheduler(vector<Room>);
     string book(int, int, int);
 };
-
 int main() {
     Room room1("adarsh");
     Room room2("utkramit");
@@ -80,24 +77,23 @@ void Room::setName(string name) {
 
 bool Room::book(int start, int  end, int day) {
     Calendar calendar = getCalendar();
-    for (Meeting m : calendar) {
-        if (m.getDay()==day&&m.getStart()<end&&start<m.getEnd()) {
+    for (Meeting m : calendar[day]) {
+        if (m.getStart()<end&&start<m.getEnd()) {
             return false;
         }
     }
 
-    Meeting meeting(start, end, day, *this);
-    calendar.push_back(meeting);
+    Meeting meeting(start, end, *this);
+    calendar[day].push_back(meeting);
     setCalendar(calendar);
     return true;
 }
 
-Meeting::Meeting(int start, int end, int day, Room room):room(room) { //passed copy here
+Meeting::Meeting(int start, int end, Room room):room(room) {
     // this->room = room; //? this wont work because
     //constructor for 'Meeting' must explicitly initialize the member 'room' which does not have a default constructor
     this->start = start;
     this->end = end;
-    this->day = day;
 }
 
 int Meeting::getEnd() const {
@@ -123,15 +119,6 @@ int Meeting::getStart() const {
 void Meeting::setStart(int start) {
     this->start = start;
 }
-
-int Meeting::getDay() const {
-    return day;
-}
-
-void Meeting::setDay(int day) {
-    this->day = day;
-}
-
 
 Scheduler::Scheduler(vector<Room> rooms) {
     this->rooms = rooms;
