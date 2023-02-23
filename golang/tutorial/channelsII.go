@@ -27,7 +27,7 @@ func main() {
 	time.Sleep(2000 * time.Millisecond)
 	logCh <- logStruct{time.Now(), logInfo, "Ending"}
 	time.Sleep(1000 * time.Millisecond)
-	doneCh <- struct{}{} //first  curly braces for type sugnature second is for initialization
+	doneCh <- struct{}{} //first curly braces for type signature second is for initialization
 }
 func logger() {
 	for {

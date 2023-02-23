@@ -60,15 +60,30 @@
 
 
 class Car {
+	/**
+	 * desc
+	 * @date 2023-02-22
+	 * @param { * } brand
+	 */
 	constructor(brand) {
 		this.carname = brand;
 	}
+	/**
+	 * desc
+	 * @date 2023-02-22
+	 */
 	present() {
 		return "I have a " + this.carname;
 	}
 }
 
 class Model extends Car {           	//? extends keyword is used to create a child class, which  inherits all the methods from  prent
+	/**
+	 * desc
+	 * @date 2023-02-22
+	 * @param { * } brand
+	 * @param { * } mod
+	 */
 	constructor(brand, mod) {
 		super(brand);  					//?  super keyword is used to call the constructor of its parent class to access the parent's properties and methods.
 
@@ -77,6 +92,10 @@ class Model extends Car {           	//? extends keyword is used to create a chi
 
 		this.model = mod;
 	}
+	/**
+	 * desc
+	 * @date 2023-02-22
+	 */
 	show() {
 		return (
 			this.present() +
@@ -98,6 +117,12 @@ class Rectangle {
 	width;
 	#height = 0;
 	#width;
+	/**
+	 * desc
+	 * @date 2023-02-22
+	 * @param { * } height
+	 * @param { * } width
+	 */
 	constructor(height, width) {
 		this.#height = height;
 		this.#width = width;
