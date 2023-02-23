@@ -119,5 +119,9 @@ let obj = [
     // vector < int > v, u = { 1, 2, 3};
     // v=u; works
     // v={u.begin(), u.end()}; works// after either of two above, v==u true;
-
+    
 ]
+
+//option is equivalent to command + D
+// to move line up and down option+arrow 
+// command + L to highlight the line 
