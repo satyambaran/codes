@@ -120,7 +120,6 @@ let nameObj = {
 	certName: "Satyam",
 	homeName: "Kundan",
 	surname: "Barnwal",
-	rashiName: "Naurang",
 };
 let strList = ["satyam", "kumar", "barnwal"]
 console.log(strList?.[4], strList?.includes("kundan"), nameObj?.["certName"]);

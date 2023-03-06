@@ -191,3 +191,61 @@ myPromise
 
 // let myCar = new Model("Ford", "Mustang");
 // console.log(myCar.show());
+
+function inventoryList() {
+    let obj = {
+        list: [],
+        add: function (str) {
+            this.list.push(str);
+        },
+        remove: function (str) {
+            let index = this.list.indexOf(str)
+            if (index != -1) {
+                this.list.splice(index, 1)
+            }
+        },
+        getList: function () {
+            return String(this.list)
+        }
+    }
+    return obj;
+}
+
+//? testing after here
+let ans = inventoryList()
+
+ans.add('satyam')
+console.log(ans.getList())
+ans.add('kundan')
+console.log(ans.getList())
+ans.add('chandan')
+console.log(ans.getList())
+ans.remove('chandan')
+console.log(ans.getList())
+ans.remove('abhilash')
+console.log(ans.getList())
+
+
+const http = require('http')
+let k = http.createServer((req, res) => {
+    let url = req.url
+    req.method
+    res.setHeader("Content-Type", "application/json");
+    if (!url.startsWith('/project/')) {
+        res.statusCode = 400
+        let ret = {
+            status: false,
+            message: "BAD REQUEST"
+        }
+        res.end(JSON.stringify(ret))
+    } else {
+        let stringSplit = url.split("/project/")
+        let dataArray = []
+        if (dataArray.includes(stringSplit[1])) {
+
+        } else {
+
+        }
+    }
+})
+k.listen(8000)
