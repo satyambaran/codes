@@ -22,6 +22,7 @@ let myNumber = 2;
 // Execute until Infinity
 while (myNumber != Infinity) {
     myNumber = myNumber * myNumber;
+    console.log(myNumber)
 }
 
 let newNum = 31;
@@ -65,6 +66,7 @@ cars.reverse();
 console.log(cars)
 
 const numArr = [40, 100, 1, 5, 25, 10];
+numArr.push(1100)
 numArr.sort(function (a, b) { return Math.sqrt(b) % 10 - Math.sqrt(a) % 10 });
 
 let numArr1 = numArr.map(func)

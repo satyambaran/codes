@@ -139,12 +139,13 @@ myPromise
 //     constructor(name) {
 //         this.name = name;
 //     }
-//     static hello(x) {
+//     static hello(x) {//todo Static properties cannot be directly accessed on instances of the class. Instead, they're accessed on the class itself.
 //         return "Hello " + x.name;
 //     }
 // }
 // let myCar = new Car("Ford");
-// console.log(Car.hello(myCar));
+// console.log(Car.hello(myCar))
+// console.log(myCar.hello()); //wont work
 // ###################################
 // class Car {
 //     constructor(brand) {
