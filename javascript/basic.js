@@ -105,7 +105,8 @@ const adventurer = {
 		name: "Dinah",
 	},
 	fun: (val) => {
-		console.log("fun is printing", val, this.name/** undefined */);
+		console.log("fun is printing", val, this.name/** undefined  	because it's an arrow function */); 
+		//? this doesn't work in arrow function
 	},
 	fullName: function () {
 		return this.name;
