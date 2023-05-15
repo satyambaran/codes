@@ -7,7 +7,7 @@ import (
 
 // use -race flag to test all this scenario
 func main() {
-	example5()
+	example0()
 }
 
 func example() {
@@ -27,6 +27,24 @@ func example() {
 			wg.Done()
 		}()
 	}
+	wg.Wait()
+}
+func example0() {
+	//! very very very important
+	wg := &sync.WaitGroup{}
+	ch := make(chan int)
+	wg.Add(1)
+	go func() {
+		fmt.Println("2")
+		ch <- 42 //? An unbuffered channel is a channel with a capacity of 0. When a value is sent on an unbuffered channel, the sender blocks until the value is received by the receiver.
+		// code will go in deadlock
+
+		// buffered channels allow for asynchronous communication
+		i := <-ch
+		fmt.Println("2", i)
+		wg.Done()
+	}()
+	wg.Wait()
 }
 func example1() {
 	// very important
@@ -43,7 +61,8 @@ func example1() {
 	go func() {
 		fmt.Println("2")
 		ch <- 42
-		fmt.Println("2", <-ch) //? this wont get executed until previous one is printed
+		i := <-ch
+		fmt.Println("2", i) //? this wont get executed until previous one is printed
 		wg.Done()
 	}()
 	wg.Wait()
@@ -90,7 +109,8 @@ func example4() {
 	//?imp      this program will work,
 	//todo      but some data will get lost
 	wg := &sync.WaitGroup{}
-	ch := make(chan int, 50)
+	ch := make(chan int, 50) // if wouldve kept the size 3, this program would have blocked.
+	// but go program can terminate itself with value still in channel
 	go func() {
 		defer wg.Done()
 		i := <-ch
@@ -100,14 +120,14 @@ func example4() {
 	for j := 0; j < 5; j++ {
 		go func(j int) {
 			i := 42
-			ch <- i //we pass copy of data, so it'll be 42
-			// code wont be stopping here as we have places to int in channels
+			ch <- i // we pass copy of data, so it'll be 42
+			// code wont be stopping here as we have places to store int in channels
 			fmt.Println(j)
 			i = 27
 			wg.Done()
 		}(j)
 	}
-	wg.Wait() //without this wait this function would have run fine, because it wont be waiting for anything
+	wg.Wait()
 }
 func example5() {
 	wg := &sync.WaitGroup{}
@@ -138,4 +158,39 @@ func example5() {
 	}()
 
 	wg.Wait()
+}
+func example6() {
+	var count int
+	wg := &sync.WaitGroup{}
+
+	for i := 0; i < 1000; i++ {
+		wg.Add(1)
+		go func() {
+			count++
+			wg.Done()
+		}()
+	}
+
+	wg.Wait()
+
+	fmt.Println(count)
+}
+func example7() {
+	var count int
+	var mutex sync.Mutex
+	wg := &sync.WaitGroup{}
+
+	for i := 0; i < 1000; i++ {
+		wg.Add(1)
+		go func() {
+			mutex.Lock()
+			count++
+			mutex.Unlock()
+			wg.Done()
+		}()
+	}
+
+	wg.Wait()
+
+	fmt.Println(count)
 }

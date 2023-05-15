@@ -15,14 +15,16 @@ type Writer interface {
 	Read([]byte) (int, error)
 }
 
-type consoleWriter struct{}
+type consoleWriter struct {
+	val int
+}
 
-func (cw consoleWriter) Write(byt []byte) (int, error) {
+func (cw *consoleWriter) Write(byt []byte) (int, error) {
 	n, err := fmt.Println(string(byt))
 	return n, err
 }
 
-func (cw consoleWriter) Read(byt []byte) (int, error) {
+func (cw *consoleWriter) Read(byt []byte) (int, error) {
 	n, err := fmt.Println(string(byt))
 	return n, err
 }
@@ -38,17 +40,21 @@ func (ic *IntCounter) Increment() int {
 }
 
 func main() {
-	var w Writer = consoleWriter{} //? to write this way, just like virtual function in c++, all behaviours in Writer interface must be overridden by consoleWriter
+	var w Writer = &consoleWriter{} //? to write this way, just like virtual function in c++, all behaviours in Writer interface must be overridden by consoleWriter
+	// w.val = 5 //todo  wont work
 	x := consoleWriter{}
+	x.val = 5
 	a, b := w.Write([]byte("Hello"))
 	fmt.Println(a, b)
 	a, b = x.Write([]byte("Hello"))
 	fmt.Println(a, b)
+
 	//?  cannot use (consoleWriter literal) (value of type consoleWriter) as Writer value in variable declaration: consoleWriter does not implement Writer (missing method Write)
 	// above error is produced when we dont implement  func (cw consoleWriter) Write(byt []byte) (int, error)
 
 	myInt := IntCounter(0)
-	var inc *IntCounter = &myInt
+	// var inc *IntCounter = &myInt //?? both of this would work
+	var inc IntCounter = myInt
 	for i := 0; i < 10; i++ {
 		fmt.Println(inc.Increment())
 	}

@@ -19,7 +19,7 @@ type logStruct struct {
 
 var logCh = make(chan logStruct, 50)
 
-var doneCh = make(chan struct{}) //struct with no fields, it requires zero memory allocation. this makes it signal only channel, there's zero memmory allocation but still receiving side will know that a message was sent
+var doneCh = make(chan struct{}) // struct with no fields, it requires zero memory allocation. this makes it signal only channel, there's zero memmory allocation but still receiving side will know that a message was sent
 
 func main() {
 	go logger()
@@ -27,7 +27,7 @@ func main() {
 	time.Sleep(2000 * time.Millisecond)
 	logCh <- logStruct{time.Now(), logInfo, "Ending"}
 	time.Sleep(1000 * time.Millisecond)
-	doneCh <- struct{}{} //first curly braces for type signature second is for initialization
+	doneCh <- struct{}{} //first curly braces for type signature, second is for initialization
 }
 func logger() {
 	for {

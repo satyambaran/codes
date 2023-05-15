@@ -15,12 +15,26 @@ func main() {
 	// name2, age := "satyam", 23
 	// fmt.Println(name, name1, name2, age)
 
-	// emoji := []string{"😀", "😃", "😚", "satyam"}
+	// emoji := []string{"😀", "😃", "😚", "satyam"} //slice is a variable-length sequence that stores the homogeneous type of data. 
 	// fmt.Println(emoji)
+
+	var myChar byte = 'a'
+	myChar2 := "a"[0]
+	myChar3 := 'a'
+
+	myString := "hello"
+	myStringBytes := []byte(myString)
+
+	myStringBytes[0] = 'H'
+	// myString[1] = 'E' //!  wont work
+	myString = string(myStringBytes)
+	fmt.Println(myString, myChar, myChar2, myChar3)
 
 	var myMap map[string]string
 	// myMap["name"] = "satyam" //?   panic: assignment to entry in nil map
+	fmt.Println(myMap)
 	myMap = make(map[string]string)
+	fmt.Println(myMap)
 	myMap["name"] = "satyam"
 	fmt.Println(myMap)
 
@@ -41,12 +55,14 @@ func main() {
 	fmt.Println(PI)
 
 	for i := 0; i < 4; i++ {
-		fmt.Printf("GeeksforGeeks\n")
+		fmt.Printf("GeeksforGeeks\t\t\t")
 	}
-	// // Infinite loop
-	// for {
-	// 	fmt.Printf("GeeksforGeeks\n")
-	// }
+	// Infinite loop
+	for {
+		fmt.Printf("GeeksforGeeks\n")
+		break
+		// continue
+	}
 
 	//while loop
 	i := 0
@@ -63,7 +79,7 @@ func main() {
 		fmt.Println(idx, val)
 	}
 	for idx, char := range "XabCd" {
-		fmt.Println(idx, string(char))
+		fmt.Println(idx, char, string(char)) //? here char is of type rune
 	}
 
 	mmap := map[int]string{

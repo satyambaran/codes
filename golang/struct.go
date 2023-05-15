@@ -36,7 +36,7 @@ func main() {
 	defer mul(10, 2)
 	defer mul(100, 2)
 	mul(1000, 2)
-	//?? folows lat in first out
+	//?? follows last in first out
 
 	// Go methods are similar to Go function with one difference, i.e, the method contains a receiver argument in it.
 	res := author{
@@ -102,6 +102,9 @@ func main() {
 	fmt.Println("Slice 1: ", res1)
 
 	string1 := "satyam"
+	byte1 := []byte(string1)
+	byte1[0] = '1'
+	string1 = string(byte1)
 	// string1[0] = byte('k')	//? cannot assign to string1[0] (value of type byte
 	// string1[0] =[] byte{'k'}	//? cannot assign to string1[0] (value of type byte
 	// string1[0] = 'k' //? cannot assign to string1[0] (value of type byte

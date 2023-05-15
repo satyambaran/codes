@@ -7,22 +7,25 @@ import (
 	"time"
 )
 
-// when all go routines are done processing and something(either waitGroup or channel) is still waiting then we get //?fatal error: all goroutines are asleep - deadlock!
+// when all go routines are done processing and something(either waitGroup or unbuffered channel) is still waiting then we get //?fatal error: all goroutines are asleep - deadlock!
+
+// https://betterprogramming.pub/common-goroutine-leaks-that-you-should-avoid-fe12d12d6ee
+//https://betterprogramming.pub/writing-better-code-with-go-concurrency-patterns-9bc5f9f73519
 
 func main() {
-	example2()
+	example3()
 }
 
 func example() {
 	//? race condition can be detected by       go run -race ./golang/tutorial/goroutines.go
 	var msg = "Hello"
 	go func() {
-		fmt.Println(msg)
+		fmt.Println("1", msg)
 	}()
 	msg = "Goodbye"
 	// will print Goodbye
 	go func(msg string) { // better practice
-		fmt.Println(msg)
+		fmt.Println("2", msg) //? this line will always print 2 Goodbye
 	}(msg)
 	msg = "Goodbye22"
 	time.Sleep(100 * time.Millisecond)
@@ -72,7 +75,7 @@ func example3() {
 	counter := 0
 	sayHello := func(wg *sync.WaitGroup, counter int) {
 		defer wg.Done()
-		fmt.Println("hello ", counter) // this will print zero because we passed counter itself which was not updateed yet
+		fmt.Println("hello ", counter) // this will print zero because we passed counter itself which was not updated yet
 		m.RUnlock()
 	}
 	increment := func(wg *sync.WaitGroup) {

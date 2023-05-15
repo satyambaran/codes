@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type Animal struct {
 	Name   string `json:"name" required max:"10"`
 	Origin string `json:"origin"`
@@ -19,10 +21,14 @@ type Fish struct {
 }
 
 func main() {
-    k:=3
-	if k==5 {
+	var v Bird
+	v.Animal.Name = "whhhhhhhhhhhhhhh"
+	fmt.Println(v)
+	
+	k := 3
+	if k == 5 {
 
-	} else if k==4 {
+	} else if k == 4 {
 
 	} else {
 

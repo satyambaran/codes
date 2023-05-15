@@ -17,6 +17,7 @@ func main() {
 
 	// empty interface
 	var myObj interface{} = 0
+	myObj = "0"
 	fmt.Println(myObj)
 	switch myObj.(type) {
 	case int:
@@ -30,7 +31,7 @@ func main() {
 
 	}
 	// have no methods on it
-	//every can be cast into empty interface{} that has no methods
+	//every type can be cast into empty interface{} that has no methods
 
 	// we can embed multiple interface in one interface
 
@@ -40,8 +41,8 @@ func main() {
 	var r1 Shape = Rectangle{2.0, 2.1}
 	var r2 Rectangle = Rectangle{2.2, 2.3}
 	var r3 Everything = Rectangle{2.2, 2.3}
-	shapeList := []Shape{c1, c2, r1, r2}
-	everythingList := []Everything{c2, c3, r2, r3} //? c1 and r1 are not accepatble here since already are a ariable of type Shape
+	shapeList := []Shape{c1, c2, r1, r2, c3, r3}
+	everythingList := []Everything{c2, c3, r2, r3} //? c1 and r1 are not accepatble here since already are a variable of type Shape
 
 	for _, val := range shapeList {
 		area, _ := val.area()

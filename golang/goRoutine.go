@@ -38,7 +38,7 @@ func main() {
 
 	// main 12 timmes, go routine 1 11 timmes
 
-	// ~~>
+	// ~~> ~~>
 	/*****
 
 	Process:  A single processor system contains only one processor. So only one process can be executed at a time.
@@ -102,7 +102,7 @@ func main() {
 
 //?   	When a program is loaded into memory along with all the resources it needs to operate, it is called a process.
 
-//?		Heap is just an area where memory is allocated or deallocated without any order. This happens when one creates an object using the new operator or something similar. This is opposed to stac k where memory is deallocated on the first in last out basis.
+//?		Heap is just an area where memory is allocated or deallocated without any order. This happens when one creates an object using the new operator or something similar. This is opposed to stack where memory is deallocated on the first in last out basis.
 //?		Process consist of registers, counter(keeps track of where a computer is in its program sequence), stack, heap, code.
 
 // How Threads and Processes Work Step By Step
